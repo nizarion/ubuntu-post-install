@@ -31,6 +31,19 @@ function install_oh_my_zsh {
 	
 
 }
+# install git-completion
+function install_git_completion {
+	echo ''
+	echo "Now configuring git-completion..."
+	GIT_VERSION=`git --version | awk '{print $3}'`
+	URL="https://raw.github.com/git/git/v$GIT_VERSION/contrib/completion/git-completion.bash"
+	echo ''
+	echo "Downloading git-completion for git version: $GIT_VERSION..."
+	if ! curl "$URL" --silent --output "$HOME/.git-completion.bash"; then
+		echo "ERROR: Couldn't download completion script. Make sure you have a working internet connection." && exit 1
+	fi
+	
+}
 
 # Set default shell to zsh
 function set_default_oh_my_zsh {
@@ -51,16 +64,12 @@ function set_default_oh_my_zsh {
 	    echo "You chose not to set your default shell to zsh. Exiting now..."
 	fi
 
-
 }
 
 # Nizar Dotfiles
 function install_dotfiles {
-	# Variables
-	ZSH="$HOME/.dotfiles/.oh-my-zsh"
-	PACKAGE="dropbox_2.10.0"
-	REMOTE="https://linux.dropbox.com/packages/ubuntu"
-	# Download and install remote package
+	# install git-completion
+	install_git_completion
 	# oh-my-zsh install
 	install_oh_my_zsh
 	# Pull down personal dotfiles
@@ -94,7 +103,7 @@ function install_dotfiles {
 		echo ''
 		echo "source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc && echo "added zsh-autosuggestions to .zshrc..."
 		echo ''
-	#	echo "source $HOME/.git-completion.bash" >> ${ZDOTDIR:-$HOME}/.bashrc && echo "added git-completion to .bashrc..."
+		echo "source $HOME/.git-completion.bash" >> ${ZDOTDIR:-$HOME}/.bashrc && echo "added git-completion to .bashrc..."
 		
 	fi
 	
