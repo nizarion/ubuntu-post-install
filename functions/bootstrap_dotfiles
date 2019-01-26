@@ -134,7 +134,7 @@ install_dotfiles () {
 function bootstrap_dotfiles () {
 
   # cd "$(dirname "$0")/.."
-  cd .dotfiles/
+  cd $HOME/.dotfiles/
   DOTFILES_ROOT=$(pwd -P)
 
   set -e
