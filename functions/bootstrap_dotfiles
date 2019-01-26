@@ -119,7 +119,7 @@ link_file () {
   fi
 }
 
-install_dotfiles () {
+install_dotfiles_bootstrap () {
   info 'installing dotfiles'
 
   local overwrite_all=false backup_all=false skip_all=false
@@ -141,8 +141,8 @@ function bootstrap_dotfiles () {
 
   echo ''
 
-  # setup_gitconfig
-  install_dotfiles
+  setup_gitconfig
+  install_dotfiles_bootstrap
 
   # If we're on a Mac, let's install and setup homebrew.
   if [ "$(uname -s)" == "Darwin" ]
