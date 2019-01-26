@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# Clone to non empty folder and clean up
+function clone_to_nonempty {
+	# Clone just the repository's .git folder (excluding files as they are already in
+	# `existing-dir`) into an empty temporary directory
+	git clone --no-checkout https://github.com/nizarion/dotfiles.git ~/.dotfiles/existing-dir.tmp # might want --no-hardlinks for cloning local repo
+
+	# Move the .git folder to the directory with the files.
+	# This makes `existing-dir` a git repo.
+	mv ~/.dotfiles/existing-dir.tmp/.git ~/.dotfiles/
+
+	# Delete the temporary directory
+	rm -rf ~/.dotfiles/existing-dir.tmp
+	cd ~/.dotfiles
+
+	# git thinks all files are deleted, this reverts the state of the repo to HEAD.
+	# WARNING: any local changes to the files will be lost.
+	git reset --hard HEAD
+}
+
+# Nizar Dotfiles
+function setup_nizar_dotfiles {
+	
+	# oh-my-zsh install
+	# install_oh_my_zsh
+	# install git-completion
+	install_git_completion
+	# Pull down personal dotfiles
+	echo ''
+	read -p "Do you want to use Nizar's dotfiles? y/n" -n 1 -r
+	echo    # (optional) move to a new line
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+	    echo ''
+		echo "Now pulling down the dotfiles..."
+		# git clone https://github.com/nizarion/dotfiles.git ~/.dotfiles
+		clone_to_nonempty
+		echo ''
+		cd $HOME/.dotfiles && echo "switched to .dotfiles dir..."
+		echo ''
+		echo "Checking out master branch..." && git checkout master
+		echo ''
+		echo "Now configuring symlinks..." 
+		bootstrap_dotfiles 
+	    if [[ $? -eq 0 ]]
+	    then
+		echo "Successfully configured your environment with the dotfiles..."
+	    else
+		echo "Dotfiles were not applied successfully..." >&2
+	fi
+	else 
+		echo ''
+	    echo "You chose not to apply github's dotfiles. You will need to configure your environment manually..."
+		echo ''
+		echo "Setting defaults for .zshrc and .bashrc..."
+		echo ''
+		echo "source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc && echo "added zsh-syntax-highlighting to .zshrc..."
+		echo ''
+		echo "source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc && echo "added zsh-autosuggestions to .zshrc..."
+		echo ''
+		echo "source $HOME/.git-completion.bash" >> ${ZDOTDIR:-$HOME}/.bashrc && echo "added git-completion to .bashrc..."
+		
+	fi
+	
+	set_default_oh_my_zsh
+
+
+}

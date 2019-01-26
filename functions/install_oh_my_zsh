@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# oh-my-zsh install
+function install_oh_my_zsh {
+	if [ -d ~/.oh-my-zsh/ ] ; then
+		echo ''
+		echo "oh-my-zsh is already installed..."
+		read -p "Would you like to update oh-my-zsh now?" -n 1 -r
+		echo ''
+		if [[ $REPLY =~ ^[Yy]$ ]] ; then
+			cd ~/.oh-my-zsh && git pull
+			if [[ $? -eq 0 ]]
+				then
+					echo "Update complete..." && cd
+				else
+					echo "Update not complete..." >&2 cd
+			fi
+		fi
+	else
+		echo "oh-my-zsh not found, now installing oh-my-zsh..."
+		echo ''
+		sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	fi
+	# oh-my-zsh plugin install
+	echo ''
+	echo "Now installing oh-my-zsh plugins..."
+	echo ''
+	clone_package_github "zsh-completions" "https://github.com/zsh-users/zsh-completions $HOME/.oh-my-zsh/custom/plugins/zsh-completions" nizar_dotfiles
+	clone_package_github "zsh-autosuggestions" "git://github.com/zsh-users/zsh-autosuggestions $HOME/.dotfiles/.zsh/zsh-autosuggestions" nizar_dotfiles
+	clone_package_github "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.dotfiles/.zsh/zsh-syntax-highlighting" nizar_dotfiles
+	
+
+}
+# install git-completion
+function install_git_completion {
+	echo ''
+	echo "Now configuring git-completion..."
+	GIT_VERSION=`git --version | awk '{print $3}'`
+	URL="https://raw.github.com/git/git/v$GIT_VERSION/contrib/completion/git-completion.bash"
+	echo ''
+	echo "Downloading git-completion for git version: $GIT_VERSION..."
+	if ! curl "$URL" --silent --output "$HOME/.git-completion.bash"; then
+		echo "ERROR: Couldn't download completion script. Make sure you have a working internet connection." && exit 1
+	fi
+	
+}
+
+# Set default shell to zsh
+function set_default_oh_my_zsh {
+	echo ''
+	read -p "Do you want to change your default shell? y/n" -n 1 -r
+	echo ''
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		echo "Now setting default shell..."
+	    superuser_do "chsh -s $(which zsh)"
+	    if [[ $? -eq 0 ]]
+	    then
+		echo "Successfully set your default shell to zsh..."
+	    else
+		echo "Default shell not set successfully..." >&2
+	fi
+	else 
+	    echo "You chose not to set your default shell to zsh. Exiting now..."
+	fi
+
+}
