@@ -8,13 +8,13 @@ function install_oh_my_zsh {
 	read -p "Would you like to update oh-my-zsh now?" -n 1 -r
 	echo ''
 	    if [[ $REPLY =~ ^[Yy]$ ]] ; then
-	    cd ~/.oh-my-zsh && git pull
-		if [[ $? -eq 0 ]]
-		then
-		    echo "Update complete..." && cd
-		else
-		    echo "Update not complete..." >&2 cd
-		fi
+			cd ~/.oh-my-zsh && git pull
+			if [[ $? -eq 0 ]]
+				then
+					echo "Update complete..." && cd
+				else
+					echo "Update not complete..." >&2 cd
+			fi
 	    fi
 	else
 	echo "oh-my-zsh not found, now installing oh-my-zsh..."
@@ -68,10 +68,11 @@ function set_default_oh_my_zsh {
 
 # Nizar Dotfiles
 function install_dotfiles {
-	# install git-completion
-	install_git_completion
+	
 	# oh-my-zsh install
 	install_oh_my_zsh
+	# install git-completion
+	install_git_completion
 	# Pull down personal dotfiles
 	echo ''
 	read -p "Do you want to use Nizar's dotfiles? y/n" -n 1 -r
