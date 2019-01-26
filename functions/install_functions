@@ -1,5 +1,43 @@
 #!/bin/bash
 
+# Clone package from github function
+#
+# ${1} = Name
+# ${2} = package-url
+# ${3} = return_function
+
+function clone_package_github() {
+	echo_message header "Starting 'install_package' function..."
+	# If package is not installed
+	if [ $(check_package_installed ${2}) != 0 ]; then
+		echo_message info "${2} is not installed. Installing..."
+		if (whiptail \
+			--title "Install ${1^}" \
+			--yesno "Proceed with installation of ${1^}?" 8 56) then
+			# Install
+			echo_message info "Cloning '${2}'..."
+			# Admin privileges
+			git clone ${2}
+			# superuser_do "apt install -y ${2}"
+			# Finished
+			echo_message success "Installation of package '${2}' is complete."
+			whiptail --title "Finished" --msgbox "Installation of ${1} complete." 8 56
+			# return
+			${3}
+		else
+			# Cancelled
+			echo_message info "Installation of ${1} cancelled."
+			# return
+			${3}
+		fi
+	else
+		# Already installed
+		echo_message info "Package '${2}' is already installed."
+		whiptail --title "Finished" --msgbox "Installation of ${1} is already complete." 8 56
+		# return
+		${3}
+	fi
+}
 # Install single package function
 #
 # ${1} = Name
