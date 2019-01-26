@@ -108,7 +108,7 @@ function install_dotfiles {
 		echo "Checking out master branch..." && git checkout master
 		echo ''
 		echo "Now configuring symlinks..." 
-		superuser_do "$HOME/.dotfiles/script/bootstrap"
+		bootstrap_dotfiles 
 	    if [[ $? -eq 0 ]]
 	    then
 		echo "Successfully configured your environment with the dotfiles..."
