@@ -66,6 +66,25 @@ function set_default_oh_my_zsh {
 
 }
 
+# Set default shell to zsh
+function clone_to_nonempty {
+	# Clone just the repository's .git folder (excluding files as they are already in
+	# `existing-dir`) into an empty temporary directory
+	git clone --no-checkout https://github.com/nizarion/dotfiles.git ~/.dotfiles/existing-dir.tmp # might want --no-hardlinks for cloning local repo
+
+	# Move the .git folder to the directory with the files.
+	# This makes `existing-dir` a git repo.
+	mv ~/.dotfiles/existing-dir.tmp/.git ~/.dotfiles/
+
+	# Delete the temporary directory
+	rmdir ~/.dotfiles/existing-dir.tmp
+	cd ~/.dotfiles
+
+	# git thinks all files are deleted, this reverts the state of the repo to HEAD.
+	# WARNING: any local changes to the files will be lost.
+	git reset --hard HEAD
+}
+
 # Nizar Dotfiles
 function install_dotfiles {
 	
@@ -81,7 +100,8 @@ function install_dotfiles {
 	then
 	    echo ''
 		echo "Now pulling down the dotfiles..."
-		git clone https://github.com/nizarion/dotfiles.git ~/.dotfiles
+		# git clone https://github.com/nizarion/dotfiles.git ~/.dotfiles
+		clone_to_nonempty
 		echo ''
 		cd $HOME/.dotfiles && echo "switched to .dotfiles dir..."
 		echo ''
