@@ -53,7 +53,7 @@ function set_default_oh_my_zsh {
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		echo "Now setting default shell..."
-	    chsh -s $(which zsh)
+	    superuser_do "chsh -s $(which zsh)"
 	    if [[ $? -eq 0 ]]
 	    then
 		echo "Successfully set your default shell to zsh..."
