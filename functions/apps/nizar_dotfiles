@@ -25,9 +25,9 @@ function install_oh_my_zsh {
 	echo ''
 	echo "Now installing oh-my-zsh plugins..."
 	echo ''
-	clone_package_github "zsh-completions" "https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions" main
-	clone_package_github "zsh-autosuggestions" "git://github.com/zsh-users/zsh-autosuggestions $HOME/.dotfiles/.zsh/zsh-autosuggestions" main
-	clone_package_github "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.dotfiles/.zsh/zsh-syntax-highlighting" main
+	clone_package_github "zsh-completions" "https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions" nizar_dotfiles
+	clone_package_github "zsh-autosuggestions" "git://github.com/zsh-users/zsh-autosuggestions $HOME/.dotfiles/.zsh/zsh-autosuggestions" nizar_dotfiles
+	clone_package_github "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.dotfiles/.zsh/zsh-syntax-highlighting" nizar_dotfiles
 	
 
 }
