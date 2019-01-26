@@ -21,7 +21,14 @@ function install_oh_my_zsh {
 	echo ''
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 	fi
-
+	# oh-my-zsh plugin install
+	echo ''
+	echo "Now installing oh-my-zsh plugins..."
+	echo ''
+	git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
+	git clone git://github.com/zsh-users/zsh-autosuggestions $HOME/.dotfiles/.zsh/zsh-autosuggestions
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.dotfiles/.zsh/zsh-syntax-highlighting
+	
 
 }
 
@@ -68,7 +75,7 @@ function install_dotfiles {
 		echo ''
 		cd $HOME/.dotfiles && echo "switched to .dotfiles dir..."
 		echo ''
-		echo "Checking out wsl branch..." && git checkout wsl
+		echo "Checking out master branch..." && git checkout master
 		echo ''
 		echo "Now configuring symlinks..." && $HOME/.dotfiles/script/bootstrap
 	    if [[ $? -eq 0 ]]
@@ -87,7 +94,7 @@ function install_dotfiles {
 		echo ''
 		echo "source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc && echo "added zsh-autosuggestions to .zshrc..."
 		echo ''
-		echo "source $HOME/.git-completion.bash" >> ${ZDOTDIR:-$HOME}/.bashrc && echo "added git-completion to .bashrc..."
+	#	echo "source $HOME/.git-completion.bash" >> ${ZDOTDIR:-$HOME}/.bashrc && echo "added git-completion to .bashrc..."
 		
 	fi
 	

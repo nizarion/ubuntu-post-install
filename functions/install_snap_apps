@@ -18,6 +18,7 @@ function install_snap_apps {
 			'install_snap_inkscape'     'Inkscape' \
 			'install_snap_slack'        'Slack' \
 			'install_snap_spotify'      'Spotify' \
+			'install_snap_vlc'	    'Vlc' \
 			'install_snap_sublime'      'Sublime Text 3' \
 			3>&1 1>&2 2>&3)
 
@@ -37,6 +38,10 @@ function install_snap_apps {
 			install_snap_spotify)
 				# install Spotify
 				install_snap_package "Spotify" "spotify" install_snap_apps
+				;;
+			install_snap_vlc)
+				# install vlc
+				install_snap_package "Vlc" "vlc" install_snap_apps
 				;;
 			install_snap_sublime)
 				# install Sublime Text

@@ -96,6 +96,7 @@ function setup_dotfiles {
 		--menu "\nWhat would you like to do?" \
 		--cancel-button "Go Back" \
 		$LINES $COLUMNS $(( $LINES - 12 )) \
+		# 'copy_nizar_dotfiles'   'Install Nizar Dotfiles' \
 		'write_profile'         'Configure environment variables' \
 		'write_bash_aliases'   'Set custom Bash aliases' \
 		'write_bashrc'         'Set custom Bash preferences' \

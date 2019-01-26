@@ -39,6 +39,7 @@ function main {
 		--cancel-button "Quit" \
 		$LINES $COLUMNS $(( $LINES - 12 )) \
 		'system_update'         'Perform system updates' \
+        'setup_nizar_dotfiles'  'Install Nizar dotfiles' \
 		'install_favs'          'Install preferred applications' \
 		'install_favs_dev'      'Install preferred development tools' \
 		'install_favs_utils'    'Install preferred utilities' \
