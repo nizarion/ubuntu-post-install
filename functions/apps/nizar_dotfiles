@@ -25,7 +25,7 @@ function install_oh_my_zsh {
 	echo ''
 	echo "Now installing oh-my-zsh plugins..."
 	echo ''
-	git clone https://github.com/zsh-users/zsh-completions $ZSH/custom/plugins/zsh-completions
+	git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
 	git clone git://github.com/zsh-users/zsh-autosuggestions $HOME/.dotfiles/.zsh/zsh-autosuggestions
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.dotfiles/.zsh/zsh-syntax-highlighting
 	
