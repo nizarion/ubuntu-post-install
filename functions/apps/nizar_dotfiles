@@ -1,0 +1,97 @@
+#!/bin/bash
+
+# oh-my-zsh install
+function install_oh_my_zsh {
+	if [ -d ~/.oh-my-zsh/ ] ; then
+	echo ''
+	echo "oh-my-zsh is already installed..."
+	read -p "Would you like to update oh-my-zsh now?" -n 1 -r
+	echo ''
+	    if [[ $REPLY =~ ^[Yy]$ ]] ; then
+	    cd ~/.oh-my-zsh && git pull
+		if [[ $? -eq 0 ]]
+		then
+		    echo "Update complete..." && cd
+		else
+		    echo "Update not complete..." >&2 cd
+		fi
+	    fi
+	else
+	echo "oh-my-zsh not found, now installing oh-my-zsh..."
+	echo ''
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	fi
+
+
+}
+
+# Set default shell to zsh
+function set_default_oh_my_zsh {
+	echo ''
+	read -p "Do you want to change your default shell? y/n" -n 1 -r
+	echo ''
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		echo "Now setting default shell..."
+	    chsh -s $(which zsh)
+	    if [[ $? -eq 0 ]]
+	    then
+		echo "Successfully set your default shell to zsh..."
+	    else
+		echo "Default shell not set successfully..." >&2
+	fi
+	else 
+	    echo "You chose not to set your default shell to zsh. Exiting now..."
+	fi
+
+
+}
+
+# Nizar Dotfiles
+function install_dotfiles {
+	# Variables
+	NAME="Dropbox"
+	PACKAGE="dropbox_2.10.0"
+	REMOTE="https://linux.dropbox.com/packages/ubuntu"
+	# Download and install remote package
+	# oh-my-zsh install
+	install_oh_my_zsh
+	# Pull down personal dotfiles
+	echo ''
+	read -p "Do you want to use Nizar's dotfiles? y/n" -n 1 -r
+	echo    # (optional) move to a new line
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+	    echo ''
+		echo "Now pulling down the dotfiles..."
+		git clone https://github.com/nizarion/dotfiles.git ~/.dotfiles
+		echo ''
+		cd $HOME/.dotfiles && echo "switched to .dotfiles dir..."
+		echo ''
+		echo "Checking out wsl branch..." && git checkout wsl
+		echo ''
+		echo "Now configuring symlinks..." && $HOME/.dotfiles/script/bootstrap
+	    if [[ $? -eq 0 ]]
+	    then
+		echo "Successfully configured your environment with the dotfiles..."
+	    else
+		echo "Dotfiles were not applied successfully..." >&2
+	fi
+	else 
+		echo ''
+	    echo "You chose not to apply github's dotfiles. You will need to configure your environment manually..."
+		echo ''
+		echo "Setting defaults for .zshrc and .bashrc..."
+		echo ''
+		echo "source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc && echo "added zsh-syntax-highlighting to .zshrc..."
+		echo ''
+		echo "source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc && echo "added zsh-autosuggestions to .zshrc..."
+		echo ''
+		echo "source $HOME/.git-completion.bash" >> ${ZDOTDIR:-$HOME}/.bashrc && echo "added git-completion to .bashrc..."
+		
+	fi
+	
+	set_default_oh_my_zsh
+
+
+}
