@@ -77,7 +77,7 @@ function clone_to_nonempty {
 	mv ~/.dotfiles/existing-dir.tmp/.git ~/.dotfiles/
 
 	# Delete the temporary directory
-	rmdir ~/.dotfiles/existing-dir.tmp
+	rm -rf ~/.dotfiles/existing-dir.tmp
 	cd ~/.dotfiles
 
 	# git thinks all files are deleted, this reverts the state of the repo to HEAD.
