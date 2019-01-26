@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# install_zotero
+function install_zotero {
+	# Variables
+	NAME="Zotero"
+	PACKAGE="https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64"
+	REMOTE="https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64"
+	# Download and install remote package
+	# Admin privileges
+	# wget -c $PACKAGE
+	# Check if failed
+	if [[ $? != 0 ]]; then
+		echo_message error "Error installing '$PACKAGE'."
+	fi
+	install_zotero
+}
+
+function install_addons {
+ 	# http://zotfile.com/
+	curl -O https://github.com/jlegewie/zotfile/releases/download/v5.0.9/zotfile-5.0.9-fx.xpi
+	# https://github.com/beloglazov/zotero-scholar-citations
+ 	curl -O https://github.com/beloglazov/zotero-scholar-citations/raw/master/builds/zotero-scholar-citations-1.9.3-fx.xpi
+	# https://github.com/retorquere/zotero-better-bibtex
+	# https://github.com/retorquere/zotero-better-bibtex/releases/latest
+	curl -O https://github.com/retorquere/zotero-better-bibtex/releases/download/v5.1.45/zotero-better-bibtex-5.1.45.xpi
+	# https://github.com/ethanwillis/zotero-scihub
+	curl -O https://github.com/ethanwillis/zotero-scihub/releases/download/0.0.5/zotero-scihub-0.0.5.xpi
+	# https://github.com/retorquere/zotero-auto-index
+	curl -O https://github.com/retorquere/zotero-auto-index/releases/download/v5.0.6/zotero-auto-index-5.0.6.xpi
+	# https://github.com/retorquere/zotero-storage-scanner/releases/latest
+	curl -O https://github.com/retorquere/zotero-storage-scanner/releases/download/v5.0.8/zotero-storage-scanner-5.0.8.xpi
+}
+
