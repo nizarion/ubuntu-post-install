@@ -1,0 +1,8 @@
+# https://github.com/daniruiz/Flat-Remix-GTK 
+# Alex Theme
+sudo add-apt-repository ppa:daniruiz/flat-remix
+sudo apt-get update
+sudo apt-get install flat-remix-gtk
+sudo apt-get install flat-remix
+
+# https://www.gnome-look.org/p/1197198/
